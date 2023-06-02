@@ -7,9 +7,10 @@ android {
     namespace 'com.lorenzoprogramma.libraio'
     compileSdk 33
 
-    buildFeatures{
-        viewBinding = true
+    buildFeatures {
+       viewBinding true
     }
+
     defaultConfig {
         applicationId "com.lorenzoprogramma.libraio"
         minSdk 28
