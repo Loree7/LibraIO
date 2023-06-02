@@ -23,7 +23,6 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Accesso non riuscito!", Toast.LENGTH_SHORT).show()
-                Toast.makeText(this, "AHAH!", Toast.LENGTH_SHORT).show()
             }
         }
 
