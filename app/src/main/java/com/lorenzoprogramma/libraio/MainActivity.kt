@@ -13,11 +13,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        replaceFragment(LoginFragment())
+        addFragment(LoginFragment())
 
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun addFragment(fragment: Fragment) {
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
         transaction.add(R.id.loginFragmentContainer, fragment)
