@@ -10,7 +10,7 @@ import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.databinding.FragmentLoginBinding
 
 
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var binding: FragmentLoginBinding
 
