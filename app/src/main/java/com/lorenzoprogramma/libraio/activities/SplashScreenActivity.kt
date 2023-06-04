@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import com.lorenzoprogramma.libraio.MainActivity
 import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.databinding.ActivitySplashScreenBinding
 
@@ -22,7 +22,7 @@ class SplashScreenActivity : AppCompatActivity() {
             override fun onAnimationStart(animation: Animation) {}
 
             override fun onAnimationEnd(animation: Animation) {
-                val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
+                val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                 setResult(Activity.RESULT_OK, intent)
                 startActivity(intent)
