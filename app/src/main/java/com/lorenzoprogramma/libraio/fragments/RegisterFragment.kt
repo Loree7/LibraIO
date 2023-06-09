@@ -20,7 +20,7 @@ class RegisterFragment : Fragment() {
 
         var nome: String = binding.registerNomeEditText.text.toString()
         var cognome: String = binding.registerCognomeEditText.text.toString()
-        var usurname: String = binding.registerUsurnameEditText.text.toString()
+        var usurname: String = binding.registerUsernameEditText.text.toString()
         var password: String = binding.registerPasswordEditText.text.toString()
         binding.registerButton.setOnClickListener {
             registerNewUser(nome, cognome, usurname, password)
