@@ -19,7 +19,7 @@ import retrofit2.Response
 import javax.security.auth.callback.Callback
 
 
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var binding: FragmentLoginBinding
 
