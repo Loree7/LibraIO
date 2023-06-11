@@ -53,8 +53,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 }
             }
 
-            TODO("Fare in modo che se l'utente non riempie i campi e clicca login spunti un messaggio diverso nella textviewError")
-            TODO("Magari si potrebbero inserire queste stringhe nel file strings.xml")
+
         }
 
         binding.textViewRegister.setOnClickListener {

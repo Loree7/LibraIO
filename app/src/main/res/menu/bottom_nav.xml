@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Home"
+        android:id="@+id/home"
+        android:icon="@drawable/baseline_home_24"/>
+
+    <item android:title="WishList"
+        android:id="@+id/wishlist"
+        android:icon="@drawable/baseline_format_wishlist_24"
+        />
+</menu>
