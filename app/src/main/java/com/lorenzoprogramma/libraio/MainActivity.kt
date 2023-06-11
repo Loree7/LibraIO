@@ -15,14 +15,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        addFragment(LoginFragment())
+        addFragment(HomeFragment(), R.id.main_frame_layout)
+        addFragment(LoginFragment(), R.id.loginFragmentContainer)
 
 
         binding.bottomNavigationView.setOnItemSelectedListener {
+            val homeFragment     = supportFragmentManager.findFragmentById(R.id.homeF)
             when(it.itemId){
-                R.id.main_frame_layout -> replaceFragment(HomeFragment())
-                R.id.main_frame_layout -> replaceFragment(WishlistFragment())
+                R.id.home -> if(homeFragment == null ){replaceFragment(HomeFragment(),R.id.main_frame_layout)}
+                R.id.wishlist -> replaceFragment(WishlistFragment(),R.id.main_frame_layout)
                 else->{
                 }
             }
@@ -30,16 +31,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addFragment(fragment: Fragment) {
+    private fun addFragment(fragment: Fragment, container : Int) {
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
-        transaction.add(R.id.loginFragmentContainer, fragment)
+        transaction.add(container, fragment)
         transaction.commit()
     }
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment, container : Int) {
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
-        transaction.replace(R.id.main_frame_layout, fragment)
+        transaction.replace(container, fragment)
         transaction.commit()
     }
 
