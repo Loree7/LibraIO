@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.lorenzoprogramma.libraio.MainActivity
 import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.api.ClientNetwork
 import com.lorenzoprogramma.libraio.data.User
@@ -19,7 +20,7 @@ import retrofit2.Response
 import javax.security.auth.callback.Callback
 
 
-class LoginFragment : Fragment(R.layout.fragment_login) {
+class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
 
@@ -43,7 +44,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val username = binding.usernameEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
 
-
             checkCredentials(UserLogin(username, password)) {result ->
                 if (result) {
                     binding.textViewError.visibility = View.GONE
@@ -63,7 +63,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun checkCredentials(userLogin: UserLogin, callback: (Boolean) -> Unit) {
-        val query = "select username, password from user where username = '${userLogin.username}' and password = '${userLogin.userPassword}';"
+        val query =
+            "select username, password from user where username = '${userLogin.username}' and password = '${userLogin.userPassword}';"
 
         ClientNetwork.retrofit.loginUser(query).enqueue(
             object : retrofit2.Callback<JsonObject> {
@@ -86,6 +87,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun openHome() {
         requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+        requireActivity().supportFragmentManager.beginTransaction().add(R.id.main_frame_layout, HomeFragment()).commit()
     }
 
     private fun openRegisterModule() {

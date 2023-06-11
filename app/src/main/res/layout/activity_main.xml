@@ -14,7 +14,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/main_linear"/>
+        app:layout_constraintBottom_toTopOf="@id/main_linear">
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/main_linear"
@@ -40,7 +41,6 @@
         android:id="@+id/loginFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_login">
-    </FrameLayout>
+        tools:layout="@layout/fragment_login"></FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

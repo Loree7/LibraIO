@@ -5,8 +5,8 @@
         android:id="@+id/home"
         android:icon="@drawable/baseline_home_24"/>
 
-    <item android:title="WishList"
+    <item android:title="Lista dei desideri"
         android:id="@+id/wishlist"
-        android:icon="@drawable/baseline_format_wishlist_24"
+        android:icon="@drawable/baseline_favorite_24"
         />
 </menu>
