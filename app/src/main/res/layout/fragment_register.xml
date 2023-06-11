@@ -86,20 +86,19 @@
         android:layout_width="311dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
-        android:textSize="24sp"
-        android:textColorHint="@color/blue"
-        android:background="@drawable/edittext_design"
-        android:ems="15"
         android:autoSizeMaxTextSize="@android:dimen/notification_large_icon_width"
+        android:background="@drawable/edittext_design"
         android:drawableStart="@drawable/baseline_lock_24"
         android:drawablePadding="10dp"
+        android:ems="15"
         android:hint="Password"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:textColorHint="@color/blue"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registerUsernameEditText"
-        />
+        app:layout_constraintTop_toBottomOf="@id/registerUsernameEditText" />
 
     <Button
         android:id="@+id/registerButton"
@@ -114,6 +113,21 @@
         android:backgroundTint="@color/blue"
         android:textStyle="bold"
         android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/textViewErrorRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Username already exist"
+        android:textSize="17sp"
+        android:textColor="@color/red"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/registerButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerPasswordEditText"
+        app:layout_constraintVertical_bias="0.19999999" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

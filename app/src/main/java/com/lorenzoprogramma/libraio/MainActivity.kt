@@ -23,9 +23,9 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.bottomNavigationView.setOnItemSelectedListener {
-            val homeFragment = supportFragmentManager.findFragmentById(R.id.homeF)
+            val homeFragmentId = supportFragmentManager.findFragmentById(R.id.homeF)
             when(it.itemId){
-                R.id.home -> if (homeFragment == null ) { replaceFragment(HomeFragment(),R.id.main_frame_layout) }
+                R.id.home -> if (homeFragmentId == null ) { replaceFragment(HomeFragment(),R.id.main_frame_layout) }
                 R.id.wishlist -> replaceFragment(WishlistFragment(), R.id.main_frame_layout)
                 else->{
                 }

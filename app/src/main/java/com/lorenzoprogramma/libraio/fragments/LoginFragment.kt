@@ -94,10 +94,4 @@ class LoginFragment : Fragment() {
         requireActivity().supportFragmentManager.beginTransaction().replace(R.id.loginFragmentContainer, RegisterFragment()).commit()
     }
 
-//    private fun checkCredentials(email: String, password: String): Boolean {
-//        // inserire qua il controllo email/pass con il database
-//        val validEmail = "lucio"
-//        val validPassword = "123"
-//
-//        return email == validEmail && password == validPassword
 }
