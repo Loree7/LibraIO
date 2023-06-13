@@ -31,6 +31,10 @@ class RegisterFragment : Fragment() {
             var surname: String = binding.registerCognomeEditText.text.toString()
             var username: String = binding.registerUsernameEditText.text.toString()
             var password: String = binding.registerPasswordEditText.text.toString()
+            if (name.isEmpty() || surname.isEmpty() || username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(context, "Riempi tutti i campi", Toast.LENGTH_SHORT).show()
+            } else {
+
 
 
             checkIfUserExist(username) {isRegistered ->
@@ -45,6 +49,7 @@ class RegisterFragment : Fragment() {
                             closeRegisterModule()
                         } else {
                             Toast.makeText(context, "errore nella registrazione", Toast.LENGTH_SHORT).show()
+                               }
                         }
                     }
                 }
@@ -52,6 +57,7 @@ class RegisterFragment : Fragment() {
         }
         return binding.root
     }
+
 
     private fun checkIfUserExist(username: String, callback: (Boolean) -> Unit) {
         val query = "SELECT * FROM user WHERE username = '$username';"

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.lorenzoprogramma.libraio.MainActivity
@@ -30,13 +31,17 @@ class LoginFragment : Fragment() {
         binding.loginButton.setOnClickListener {
             val username = binding.usernameEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
+            if (username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(context, "Riempi tutti i campi", Toast.LENGTH_SHORT).show()
+            } else {
 
-            checkCredentials(username, password) {result ->
-                if (result) {
-                    binding.textViewError.visibility = View.GONE
-                    openHome()
-                } else {
-                    binding.textViewError.visibility = View.VISIBLE
+                checkCredentials(username, password) { result ->
+                    if (result) {
+                        binding.textViewError.visibility = View.GONE
+                        openHome()
+                    } else {
+                        binding.textViewError.visibility = View.VISIBLE
+                    }
                 }
             }
         }
