@@ -122,7 +122,7 @@ class RegisterFragment : Fragment() {
 
     private fun closeRegisterModule() {
         requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.main_frame_layout, CatalogFragment()).commit()
+        requireActivity().supportFragmentManager.beginTransaction().add(R.id.loginFragmentContainer, LoginFragment()).commit()
     }
 
 }
