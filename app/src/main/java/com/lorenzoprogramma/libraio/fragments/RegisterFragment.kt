@@ -1,6 +1,7 @@
 package com.lorenzoprogramma.libraio.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +11,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.api.ClientNetwork
-import com.lorenzoprogramma.libraio.data.User
 import com.lorenzoprogramma.libraio.databinding.FragmentRegisterBinding
-import okhttp3.MediaType
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
 
@@ -27,55 +25,98 @@ class RegisterFragment : Fragment() {
     ): View? {
         binding = FragmentRegisterBinding.inflate(inflater)
 
-        var name: String = binding.registerNomeEditText.text.toString()
-        var surname: String = binding.registerCognomeEditText.text.toString()
-        var username: String = binding.registerUsernameEditText.text.toString()
-        var password: String = binding.registerPasswordEditText.text.toString()
 
         binding.registerButton.setOnClickListener {
+            var name: String = binding.registerNomeEditText.text.toString()
+            var surname: String = binding.registerCognomeEditText.text.toString()
+            var username: String = binding.registerUsernameEditText.text.toString()
+            var password: String = binding.registerPasswordEditText.text.toString()
 
-            checkIfUserExist(User(null, null, null, null, username, null)) {isRegistered ->
+
+            checkIfUserExist(username) {isRegistered ->
                 if (isRegistered) {
                     binding.textViewErrorRegister.visibility = View.VISIBLE
                     Toast.makeText(context, "Esiste", Toast.LENGTH_SHORT).show()
-                    println("esiste")
                 } else {
                     binding.textViewErrorRegister.visibility = View.GONE
-                    Toast.makeText(context, "NOn esiste", Toast.LENGTH_SHORT).show()
-                    println("Non esiste")
-//                    closeRegisterModule()
+                    registerNewUser(name, surname, username, password) {result ->
+                        if (result) {
+                            Toast.makeText(context, "Utente registrato", Toast.LENGTH_SHORT).show()
+                            closeRegisterModule()
+                        } else {
+                            Toast.makeText(context, "errore nella registrazione", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             }
         }
         return binding.root
     }
 
-    fun checkIfUserExist(user: User, callback: (Boolean) -> Unit) {
-        val query = "select COUNT(*) AS count from user where username='${user.username}';"
-//        val query2 = "insert into user (name, surname, password, username) values ('${user.name}', '${user.surname}', '${user.username}', '${user.userPassword}');"
-        val requestBody = RequestBody.create(MediaType.parse("application/json"), "{\"username\": \"$user.username\"}")
-
-        ClientNetwork.retrofit.findUser(requestBody).enqueue(
-            object : retrofit2.Callback<Boolean> {
-                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+    private fun checkIfUserExist(username: String, callback: (Boolean) -> Unit) {
+        val query = "SELECT * FROM user WHERE username = '$username';"
+        ClientNetwork.retrofit.findUser(query).enqueue(
+            object : retrofit2.Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     if (response.isSuccessful) {
-                        val result = response.body() ?: false
-                        callback(result)
+                        val resultSize = (response.body()?.get("queryset") as JsonArray).size()
+                        val exist = resultSize == 1
+                        println(exist)
+                        callback(exist)
+                    } else {
+                        callback(false)
                     }
                 }
 
-                override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                    println("problema con la registrazione")
-                    callback.invoke(false)
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    callback(false)
+                    Log.e("Retrofit", "Errore: ${t.message}", t)
+                    println("Problem on login call")
                 }
             }
         )
+    }
 
+    private fun registerNewUser(name: String, surname: String, username: String, password: String, callback: (Boolean) -> Unit) {
+        val query = "insert into user (name, surname, password, username) values ('${name}', '${surname}', '${password}', '${username}');"
+
+        ClientNetwork.retrofit.registerUser(query).enqueue(
+            object : retrofit2.Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    if (response.isSuccessful) {
+                        println("success")
+                        val resultSizePrimitive = (response.body()?.getAsJsonPrimitive("queryset"))
+                        val resultSize = resultSizePrimitive?.asString
+
+                        println(resultSizePrimitive)
+                        if (resultSize != null) {
+                            val registrationSuccessful = resultSize == "insert executed!"
+                            println(registrationSuccessful)
+                            callback(registrationSuccessful)
+                        } else {
+                            callback(false)
+                        }
+                    } else {
+                        val statusCode = response.code()
+                        val errorMessage = response.message()
+                        Log.e("Retrofit", "Errore $statusCode: $errorMessage")
+                        println("non success")
+                        callback(false)
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    callback(false)
+                    Log.e("Retrofit", "Errore: ${t.message}", t)
+                    println("Problem on register call")
+                }
+            }
+        )
     }
 
     private fun closeRegisterModule() {
         requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.main_frame_layout, HomeFragment()).commit()
+        requireActivity().supportFragmentManager.beginTransaction().add(R.id.main_frame_layout, CatalogFragment()).commit()
     }
 
 }

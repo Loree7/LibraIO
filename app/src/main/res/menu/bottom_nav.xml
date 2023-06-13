@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Home"
-        android:id="@+id/home"
-        android:icon="@drawable/baseline_home_24"/>
+    <item android:title="Catalogo"
+        android:id="@+id/catalog"
+        android:icon="@drawable/baseline_menu_book_24"/>
 
     <item android:title="Lista dei desideri"
         android:id="@+id/wishlist"

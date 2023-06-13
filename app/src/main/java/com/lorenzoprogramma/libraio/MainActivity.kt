@@ -3,12 +3,9 @@ package com.lorenzoprogramma.libraio
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainer
-import androidx.fragment.app.FragmentManager
 import com.lorenzoprogramma.libraio.databinding.ActivityMainBinding
-import com.lorenzoprogramma.libraio.fragments.HomeFragment
+import com.lorenzoprogramma.libraio.fragments.CatalogFragment
 import com.lorenzoprogramma.libraio.fragments.LoginFragment
 import com.lorenzoprogramma.libraio.fragments.WishlistFragment
 
@@ -19,13 +16,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        addFragment(LoginFragment(), R.id.loginFragmentContainer)
-
+        if (savedInstanceState == null) {
+            addFragment(LoginFragment(), R.id.loginFragmentContainer)
+        }
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             val homeFragmentId = supportFragmentManager.findFragmentById(R.id.homeF)
             when(it.itemId){
-                R.id.home -> if (homeFragmentId == null ) { replaceFragment(HomeFragment(),R.id.main_frame_layout) }
+                R.id.catalog -> if (homeFragmentId == null ) { replaceFragment(CatalogFragment(),R.id.main_frame_layout) }
                 R.id.wishlist -> replaceFragment(WishlistFragment(), R.id.main_frame_layout)
                 else->{
                 }
@@ -45,6 +43,10 @@ class MainActivity : AppCompatActivity() {
         val transaction = manager.beginTransaction()
         transaction.replace(container, fragment)
         transaction.commit()
+    }
+
+    fun showBottomNavigationView() {
+        binding.bottomNavigationView.visibility = View.VISIBLE
     }
 
 
