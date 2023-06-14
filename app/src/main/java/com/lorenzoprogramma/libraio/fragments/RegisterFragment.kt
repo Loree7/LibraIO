@@ -27,29 +27,28 @@ class RegisterFragment : Fragment() {
 
 
         binding.registerButton.setOnClickListener {
-            var name: String = binding.registerNomeEditText.text.toString()
-            var surname: String = binding.registerCognomeEditText.text.toString()
-            var username: String = binding.registerUsernameEditText.text.toString()
-            var password: String = binding.registerPasswordEditText.text.toString()
-            if (name.isEmpty() || surname.isEmpty() || username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(context, "Riempi tutti i campi", Toast.LENGTH_SHORT).show()
+            val name: String = binding.registerNomeEditText.text.toString()
+            val surname: String = binding.registerCognomeEditText.text.toString()
+            val username: String = binding.registerUsernameEditText.text.toString()
+            val password: String = binding.registerPasswordEditText.text.toString()
+
+            if (name.isBlank() || surname.isBlank() || username.isBlank() || password.isBlank()) {
+                binding.textViewErrorRegister.text = getString(R.string.blank_textfield)
             } else {
-
-
-
-            checkIfUserExist(username) {isRegistered ->
-                if (isRegistered) {
-                    binding.textViewErrorRegister.visibility = View.VISIBLE
-                    Toast.makeText(context, "Esiste", Toast.LENGTH_SHORT).show()
-                } else {
-                    binding.textViewErrorRegister.visibility = View.GONE
-                    registerNewUser(name, surname, username, password) {result ->
-                        if (result) {
-                            Toast.makeText(context, "Utente registrato", Toast.LENGTH_SHORT).show()
-                            closeRegisterModule()
-                        } else {
-                            Toast.makeText(context, "errore nella registrazione", Toast.LENGTH_SHORT).show()
-                               }
+                checkIfUserExist(username) {isRegistered ->
+                    if (isRegistered) {
+                        binding.textViewErrorRegister.text = getString(R.string.isRegistered)
+                        binding.textViewErrorRegister.visibility = View.VISIBLE
+                        Toast.makeText(context, "Esiste", Toast.LENGTH_SHORT).show()
+                    } else {
+                        binding.textViewErrorRegister.visibility = View.GONE
+                        registerNewUser(name, surname, username, password) {result ->
+                            if (result) {
+                                Toast.makeText(context, "Utente registrato", Toast.LENGTH_SHORT).show()
+                                closeRegisterModule()
+                            } else {
+                                Toast.makeText(context, "errore nella registrazione", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }

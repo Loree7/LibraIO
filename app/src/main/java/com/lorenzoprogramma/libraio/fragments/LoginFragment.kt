@@ -31,8 +31,8 @@ class LoginFragment : Fragment() {
         binding.loginButton.setOnClickListener {
             val username = binding.usernameEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
-            if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(context, "Riempi tutti i campi", Toast.LENGTH_SHORT).show()
+            if (username.isBlank() || password.isBlank()) {
+                binding.textViewError.text = getString(R.string.blank_textfield)
             } else {
 
                 checkCredentials(username, password) { result ->
