@@ -4,4 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="isRegistered">Username gia\' in uso</string>
     <string name="blank_textfield">Perfavore riempi prima tutti i campi</string>
+
+    <style name="CustomFont">
+        <item name="android:fontFamily">@font/mulishbold</item>
+    </style>
 </resources>

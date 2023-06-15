@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.lorenzoprogramma.libraio.databinding.ActivityMainBinding
 import com.lorenzoprogramma.libraio.fragments.CatalogFragment
+import com.lorenzoprogramma.libraio.fragments.HomeFragment
 import com.lorenzoprogramma.libraio.fragments.LoginFragment
 import com.lorenzoprogramma.libraio.fragments.WishlistFragment
 
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             val homeFragmentId = supportFragmentManager.findFragmentById(R.id.homeF)
             when(it.itemId){
-                R.id.catalog -> if (homeFragmentId == null ) { replaceFragment(CatalogFragment(),R.id.main_frame_layout) }
+                R.id.home -> if (homeFragmentId == null ) { replaceFragment(HomeFragment(), R.id.main_frame_layout) }
                 R.id.wishlist -> replaceFragment(WishlistFragment(), R.id.main_frame_layout)
                 else->{
                 }
