@@ -14,6 +14,7 @@ import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.api.ClientNetwork
 import com.lorenzoprogramma.libraio.data.User
 import com.lorenzoprogramma.libraio.databinding.FragmentLoginBinding
+import com.lorenzoprogramma.libraio.utils.FragmentUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,7 +47,10 @@ class LoginFragment : Fragment() {
                             val bundle = Bundle()
                             bundle.putParcelable("user", user)
                             homeFragment.arguments = bundle
-                            openHome(homeFragment)
+//                            openHome(homeFragment)
+                            FragmentUtils.removeFragment(requireActivity().supportFragmentManager, this)
+                            FragmentUtils.addFragment(requireActivity().supportFragmentManager, homeFragment, R.id.main_frame_layout)
+                            (activity as? MainActivity)?.toggleBottomNavigationView(true)
                         }
                     } else {
                         binding.textViewError.visibility = View.VISIBLE
@@ -56,7 +60,8 @@ class LoginFragment : Fragment() {
         }
 
         binding.textViewRegister.setOnClickListener {
-            openRegisterModule()
+//            openRegisterModule()
+            FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, RegisterFragment(), R.id.loginFragmentContainer)
         }
         return binding.root
     }
@@ -80,16 +85,6 @@ class LoginFragment : Fragment() {
                 }
             }
         )
-    }
-
-    private fun openHome(fragment: Fragment) {
-        requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.main_frame_layout, fragment).commit()
-        (activity as? MainActivity)?.toggleBottomNavigationView(true)
-    }
-
-    private fun openRegisterModule() {
-        requireActivity().supportFragmentManager.beginTransaction().replace(R.id.loginFragmentContainer, RegisterFragment()).commit()
     }
 
     private fun obtainUserInfo(username: String, callback: (User) -> Unit) {
@@ -122,5 +117,15 @@ class LoginFragment : Fragment() {
         )
 
     }
+
+//    private fun openHome(fragment: Fragment) {
+//        requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+//        requireActivity().supportFragmentManager.beginTransaction().add(R.id.main_frame_layout, fragment).commit()
+//        (activity as? MainActivity)?.toggleBottomNavigationView(true)
+//    }
+
+//    private fun openRegisterModule() {
+//        requireActivity().supportFragmentManager.beginTransaction().replace(R.id.loginFragmentContainer, RegisterFragment()).commit()
+//    }
 
 }

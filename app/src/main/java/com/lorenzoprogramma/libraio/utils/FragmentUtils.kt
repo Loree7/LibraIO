@@ -16,5 +16,11 @@ class FragmentUtils {
             transaction.replace(container, fragment)
             transaction.commit()
         }
+
+        fun removeFragment(manager: FragmentManager, fragment: Fragment) {
+            val transaction = manager.beginTransaction()
+            transaction.remove(fragment)
+            transaction.commit()
+        }
     }
 }

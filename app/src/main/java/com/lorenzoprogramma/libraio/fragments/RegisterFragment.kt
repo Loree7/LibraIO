@@ -12,6 +12,7 @@ import com.google.gson.JsonObject
 import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.api.ClientNetwork
 import com.lorenzoprogramma.libraio.databinding.FragmentRegisterBinding
+import com.lorenzoprogramma.libraio.utils.FragmentUtils
 import retrofit2.Call
 import retrofit2.Response
 
@@ -45,7 +46,8 @@ class RegisterFragment : Fragment() {
                         registerNewUser(name, surname, username, password) {result ->
                             if (result) {
                                 Toast.makeText(context, "Utente registrato", Toast.LENGTH_SHORT).show()
-                                closeRegisterModule()
+//                                closeRegisterModule()
+                                FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, LoginFragment(), R.id.loginFragmentContainer)
                             } else {
                                 Toast.makeText(context, "errore nella registrazione", Toast.LENGTH_SHORT).show()
                             }
@@ -119,9 +121,9 @@ class RegisterFragment : Fragment() {
         )
     }
 
-    private fun closeRegisterModule() {
-        requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.loginFragmentContainer, LoginFragment()).commit()
-    }
+//    private fun closeRegisterModule() {
+//        requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+//        requireActivity().supportFragmentManager.beginTransaction().add(R.id.loginFragmentContainer, LoginFragment()).commit()
+//    }
 
 }

@@ -26,27 +26,31 @@ class HomeFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putParcelable("user", user)
                 accountInfoFragment.arguments = bundle
-                openAccountInfo(accountInfoFragment)
+//                openAccountInfo(accountInfoFragment)
+                FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, accountInfoFragment, R.id.main_frame_layout)
+                (activity as? MainActivity)?.toggleBottomNavigationView(false)
             }
 
         }
 
         binding.imageViewCatalog.setOnClickListener{
-            openCatalog(CatalogFragment())
+//            openCatalog(CatalogFragment())
+            FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, CatalogFragment(), R.id.main_frame_layout)
+            (activity as? MainActivity)?.toggleBottomNavigationView(false)
         }
 
         return binding.root
     }
 
-    private fun openAccountInfo(fragment: Fragment) {
-        requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.main_frame_layout, fragment).commit()
-        (activity as? MainActivity)?.toggleBottomNavigationView(false)
-    }
-
-    private fun openCatalog(fragment: Fragment) {
-        requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
-        requireActivity().supportFragmentManager.beginTransaction().add(R.id.main_frame_layout, fragment).commit()
-        (activity as? MainActivity)?.toggleBottomNavigationView(false)
-    }
+//    private fun openAccountInfo(fragment: Fragment) {
+//        requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+//        requireActivity().supportFragmentManager.beginTransaction().add(R.id.main_frame_layout, fragment).commit()
+//        (activity as? MainActivity)?.toggleBottomNavigationView(false)
+//    }
+//
+//    private fun openCatalog(fragment: Fragment) {
+//        requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+//        requireActivity().supportFragmentManager.beginTransaction().add(R.id.main_frame_layout, fragment).commit()
+//        (activity as? MainActivity)?.toggleBottomNavigationView(false)
+//    }
 }
