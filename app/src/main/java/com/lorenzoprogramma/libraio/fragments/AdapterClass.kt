@@ -16,7 +16,7 @@ class AdapterClass(private val dataList: List<Book>) : RecyclerView.Adapter<Adap
     class ViewHolder(binding : CardCellBinding): RecyclerView.ViewHolder(binding.root) {
         val bookImage:ImageView = binding.imageViewCover
         val bookTitle:TextView = binding.textViewTitle
-        val bookAuthor:TextView = binding.textViewAuthor
+//        val bookAuthor:TextView = binding.textViewAuthor
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,9 +30,9 @@ class AdapterClass(private val dataList: List<Book>) : RecyclerView.Adapter<Adap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = dataList[position]
-        holder.bookImage.setImageResource(currentItem.dataImage.toInt())
-        holder.bookTitle.text = currentItem.dataTitle
-        holder.bookAuthor.text = currentItem.dataAuthor
+        holder.bookImage.setImageBitmap(currentItem.cover)
+        holder.bookTitle.text = currentItem.title
+//        holder.bookAuthor.text = currentItem.author
     }
 
 

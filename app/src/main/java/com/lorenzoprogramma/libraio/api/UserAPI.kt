@@ -13,6 +13,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
+import retrofit2.http.Url
 
 interface UserAPI {
 
@@ -35,4 +36,7 @@ interface UserAPI {
     @POST("postSelect/")
     @FormUrlEncoded
     fun getBook(@Field("query") query: String): Call<JsonObject>
+
+    @GET
+    fun getCover(@Url url: String) : Call <ResponseBody>
 }

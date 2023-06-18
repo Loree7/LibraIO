@@ -1,3 +1,10 @@
 package com.lorenzoprogramma.libraio.data
 
-data class Book(val isbn: String, val dataImage: String, val dataTitle: String,val dataAuthor: String)
+import android.graphics.Bitmap
+
+data class Book(
+    val isbn: String?,
+    val title: String?,
+    val author: String?,
+    val cover: Bitmap?
+)
