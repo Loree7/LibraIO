@@ -32,5 +32,7 @@ interface UserAPI {
     @FormUrlEncoded
     fun getUserInfo(@Field("query") query: String): Call<JsonObject>
 
-
+    @POST("postSelect/")
+    @FormUrlEncoded
+    fun getBook(@Field("query") query: String): Call<JsonObject>
 }

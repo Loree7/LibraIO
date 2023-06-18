@@ -31,11 +31,20 @@ class HomeFragment : Fragment() {
 
         }
 
+        binding.imageViewCatalog.setOnClickListener{
+            openCatalog(CatalogFragment())
+        }
 
         return binding.root
     }
 
     private fun openAccountInfo(fragment: Fragment) {
+        requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+        requireActivity().supportFragmentManager.beginTransaction().add(R.id.main_frame_layout, fragment).commit()
+        (activity as? MainActivity)?.toggleBottomNavigationView(false)
+    }
+
+    private fun openCatalog(fragment: Fragment) {
         requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
         requireActivity().supportFragmentManager.beginTransaction().add(R.id.main_frame_layout, fragment).commit()
         (activity as? MainActivity)?.toggleBottomNavigationView(false)
