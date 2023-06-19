@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
 
         binding.imageViewCatalog.setOnClickListener{
 //            openCatalog(CatalogFragment())
-            FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, CatalogFragment(), R.id.main_frame_layout)
+            FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, BookCategoriesFragment(), R.id.main_frame_layout)
             (activity as? MainActivity)?.toggleBottomNavigationView(false)
         }
 

@@ -1,15 +1,12 @@
-package com.lorenzoprogramma.libraio.fragments
+package com.lorenzoprogramma.libraio.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.data.Book
 import com.lorenzoprogramma.libraio.databinding.CardCellBinding
-import com.lorenzoprogramma.libraio.databinding.FragmentCatalogBinding
 
 class AdapterClass(private val dataList: List<Book>) : RecyclerView.Adapter<AdapterClass.ViewHolder>() {
 
