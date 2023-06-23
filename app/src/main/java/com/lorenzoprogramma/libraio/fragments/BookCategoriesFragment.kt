@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.adapters.AdapterCategoriesClass
-import com.lorenzoprogramma.libraio.adapters.AdapterClass
 import com.lorenzoprogramma.libraio.data.Categories
 import com.lorenzoprogramma.libraio.databinding.FragmentBookCategoriesBinding
+import com.lorenzoprogramma.libraio.utils.FragmentUtils
 
 
 class BookCategoriesFragment : Fragment() {
@@ -26,16 +26,34 @@ class BookCategoriesFragment : Fragment() {
 
         binding.bookCategoriesRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val data = arrayListOf<Categories>()
-        val adapter = AdapterCategoriesClass(data)
+        val categoriesList = mutableListOf<Categories>()
+        val adapter = AdapterCategoriesClass(categoriesList)
         binding.bookCategoriesRecyclerView.adapter = adapter
+        val categories = arrayOf("arte", "fantasy", "horror", "psicologia", "romanzo", "sport", "storia", "thriller")
 
+        for (categoryName in categories) {
+            val imageResourceId = resources.getIdentifier(
+                categoryName,
+                "drawable",
+                requireContext().packageName
+            )
+            categoriesList.add(Categories(imageResourceId, categoryName))
+            println(categoriesList)
+        }
+        adapter.notifyDataSetChanged()
 
-        //popolare con le immagini e i nomi delle categorie
+        adapter.setOnClickListener(object : AdapterCategoriesClass.OnClickListener {
+            override fun onClick(position: Int, model: Categories) {
+                //Passare la categoria come string?
+                val catalogFragment = CatalogFragment()
+                val categoryName: String = model.categoriesName
+                val bundle = Bundle()
+                bundle.putString("category", categoryName)
+                catalogFragment.arguments = bundle
+                FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, catalogFragment, R.id.main_frame_layout)
+            }
 
-
-
-
+        })
 
         return binding.root
     }

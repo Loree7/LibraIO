@@ -19,24 +19,12 @@ interface UserAPI {
 
     @POST("postSelect/")
     @FormUrlEncoded
-    fun loginUser(@Field("query") query: String): Call<JsonObject>
+    fun select(@Field("query") query: String): Call<JsonObject>
 
     @POST("postInsert/")
     @FormUrlEncoded
-    fun registerUser(@Field ("query") query: String): Call<JsonObject>
-
-    @POST("postSelect/")
-    @FormUrlEncoded
-    fun findUser(@Field("query") query: String): Call<JsonObject>
-
-    @POST("postSelect/")
-    @FormUrlEncoded
-    fun getUserInfo(@Field("query") query: String): Call<JsonObject>
-
-    @POST("postSelect/")
-    @FormUrlEncoded
-    fun getBook(@Field("query") query: String): Call<JsonObject>
+    fun insert(@Field ("query") query: String): Call<JsonObject>
 
     @GET
-    fun getCover(@Url url: String) : Call <ResponseBody>
+    fun get(@Url url: String) : Call <ResponseBody>
 }

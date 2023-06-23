@@ -1,5 +1,6 @@
 package com.lorenzoprogramma.libraio.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -47,7 +48,10 @@ class LoginFragment : Fragment() {
                             val bundle = Bundle()
                             bundle.putParcelable("user", user)
                             homeFragment.arguments = bundle
-//                            openHome(homeFragment)
+                            val sharedPreferences = requireContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+                            val editor = sharedPreferences?.edit()
+                            editor?.putBoolean("isLogged", true)
+                            editor?.apply()
                             FragmentUtils.removeFragment(requireActivity().supportFragmentManager, this)
                             FragmentUtils.addFragment(requireActivity().supportFragmentManager, homeFragment, R.id.main_frame_layout)
                             (activity as? MainActivity)?.toggleBottomNavigationView(true)
@@ -63,6 +67,13 @@ class LoginFragment : Fragment() {
 //            openRegisterModule()
             FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, RegisterFragment(), R.id.loginFragmentContainer)
         }
+
+        binding.textViewGuest.setOnClickListener {
+            FragmentUtils.removeFragment(requireActivity().supportFragmentManager, this)
+            FragmentUtils.addFragment(requireActivity().supportFragmentManager, HomeFragment(), R.id.main_frame_layout)
+            (activity as? MainActivity)?.toggleBottomNavigationView(true)
+        }
+
         return binding.root
     }
 
@@ -70,7 +81,7 @@ class LoginFragment : Fragment() {
         val query =
             "select username, password from user where username = '${username}' and password = '${password}';"
 
-        ClientNetwork.retrofit.loginUser(query).enqueue(
+        ClientNetwork.retrofit.select(query).enqueue(
             object : retrofit2.Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     if (response.isSuccessful) {
@@ -90,7 +101,7 @@ class LoginFragment : Fragment() {
     private fun obtainUserInfo(username: String, callback: (User) -> Unit) {
         val query = "SELECT name, surname, username, password, conduct from user where username= '$username';"
 
-        ClientNetwork.retrofit.getUserInfo(query).enqueue(
+        ClientNetwork.retrofit.select(query).enqueue(
             object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     if (response.isSuccessful) {

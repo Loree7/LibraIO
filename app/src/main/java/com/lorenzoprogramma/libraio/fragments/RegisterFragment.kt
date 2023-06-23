@@ -62,7 +62,7 @@ class RegisterFragment : Fragment() {
 
     private fun checkIfUserExist(username: String, callback: (Boolean) -> Unit) {
         val query = "SELECT * FROM user WHERE username = '$username';"
-        ClientNetwork.retrofit.findUser(query).enqueue(
+        ClientNetwork.retrofit.select(query).enqueue(
             object : retrofit2.Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     if (response.isSuccessful) {
@@ -87,7 +87,7 @@ class RegisterFragment : Fragment() {
     private fun registerNewUser(name: String, surname: String, username: String, password: String, callback: (Boolean) -> Unit) {
         val query = "insert into user (name, surname, password, username) values ('${name}', '${surname}', '${password}', '${username}');"
 
-        ClientNetwork.retrofit.registerUser(query).enqueue(
+        ClientNetwork.retrofit.insert(query).enqueue(
             object : retrofit2.Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     if (response.isSuccessful) {

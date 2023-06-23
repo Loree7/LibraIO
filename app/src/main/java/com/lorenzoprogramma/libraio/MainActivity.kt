@@ -1,8 +1,10 @@
 package com.lorenzoprogramma.libraio
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.lorenzoprogramma.libraio.databinding.ActivityMainBinding
 import com.lorenzoprogramma.libraio.fragments.HomeFragment
 import com.lorenzoprogramma.libraio.fragments.LoginFragment
@@ -25,7 +27,15 @@ class MainActivity : AppCompatActivity() {
             val homeFragmentId = supportFragmentManager.findFragmentById(R.id.homeF)
             when(it.itemId){
                 R.id.home -> if (homeFragmentId == null ) { FragmentUtils.replaceFragment(fragmentManager, HomeFragment(), R.id.main_frame_layout) }
-                R.id.wishlist -> FragmentUtils.replaceFragment(fragmentManager, WishlistFragment() ,R.id.main_frame_layout)
+                R.id.wishlist -> {
+                    val sharedPreferences = this.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+                    val isLogged = sharedPreferences.getBoolean("isLogged", false)
+                    if (isLogged) {
+                        FragmentUtils.replaceFragment(fragmentManager, WishlistFragment(), R.id.main_frame_layout)
+                    } else {
+                        Toast.makeText(this, "Non puoi accedere a questa sezione come ospite", Toast.LENGTH_SHORT).show()
+                    }
+                }
                 else->{
                 }
             }
@@ -33,18 +43,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    private fun addFragment(fragment: Fragment, container: Int) {
-//        val manager = supportFragmentManager
-//        val transaction = manager.beginTransaction()
-//        transaction.add(container, fragment)
-//        transaction.commit()
-//    }
-//    private fun replaceFragment(fragment: Fragment, container: Int) {
-//        val manager = supportFragmentManager
-//        val transaction = manager.beginTransaction()
-//        transaction.replace(container, fragment)
-//        transaction.commit()
-//    }
 
     fun toggleBottomNavigationView(toggle: Boolean) {
         if (toggle) {

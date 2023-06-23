@@ -1,6 +1,7 @@
 package com.lorenzoprogramma.libraio.fragments
 
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,10 +25,15 @@ class AccountInfoFragment : Fragment() {
     }
 
     private fun setUpUserInfo(user: User) {
-        binding.textViewName.text = user.name
-        binding.textViewSurname.text = user.surname
-        binding.textViewUsername.text = user.username
-        binding.textViewConduct.text = user.conduct.toString()
+        binding.textInputName.text = Editable.Factory.getInstance().newEditable(user.name)
+        binding.textInputSurname.text = Editable.Factory.getInstance().newEditable(user.surname)
+        binding.textInputUsername.text = Editable.Factory.getInstance().newEditable(user.username)
+        binding.textInputPassword.text = Editable.Factory.getInstance().newEditable(user.userPassword)
+        binding.ratingBar.rating = user.conduct?.toFloat() ?: 0f
+//        binding.textViewName.text = user.name
+//        binding.textViewSurname.text = user.surname
+//        binding.textViewUsername.text = user.username
+//        binding.textViewConduct.text = user.conduct.toString()
     }
 
 }

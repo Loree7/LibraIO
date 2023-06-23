@@ -17,7 +17,7 @@
         android:contentDescription="cover"/>
 
     <TextView
-        android:id="@+id/textViewTitle"
+        android:id="@+id/textViewTitleAccountInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

@@ -1,10 +1,9 @@
 package com.lorenzoprogramma.libraio.data
 
-import android.graphics.Bitmap
-import android.widget.ImageView
-import android.widget.TextView
+import android.os.Parcel
+import android.os.Parcelable
 
-class Categories (
-    val categoriesImage: Bitmap?,
-    val categoriesName : String
+class Categories(
+    val categoriesImage: Int,
+    val categoriesName: String
 )
