@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/imageButtonBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -44,7 +44,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.41"
-                app:layout_constraintStart_toEndOf="@+id/imageButton"
+                app:layout_constraintStart_toEndOf="@+id/imageButtonBack"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -115,31 +115,31 @@
         android:id="@+id/textInputLayoutUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="22dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="22dp"
-        android:hint="Username"
         android:clickable="false"
+        android:hint="Username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInputLayoutSurname">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:maxLines="1"
-            android:inputType="text"
-            android:enabled="false"
-            android:textColor="@color/dark_blue"
             android:backgroundTint="@color/grey"
-            android:textColorHint="@color/grey">
-        </com.google.android.material.textfield.TextInputEditText>
+            android:enabled="false"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/dark_blue"
+            android:textColorHint="@color/grey"></com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutPassword"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
         android:layout_marginTop="16dp"
@@ -147,17 +147,18 @@
         android:clickable="false"
         android:hint="Password"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInputLayoutUsername">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputPassword"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:background="@null"
             android:backgroundTint="@color/white"
-            android:inputType="text"
             android:enabled="false"
+            android:inputType="textPassword"
             android:maxLines="1"
             android:textColor="@color/dark_blue"
             android:textColorHint="@color/grey"></com.google.android.material.textfield.TextInputEditText>
@@ -184,15 +185,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewUserConduct"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
+        android:clickable="false"
+        android:isIndicator="true"
         android:numStars="5"
-        android:stepSize="1.0"
+        android:progressTint="@color/yellow"
         android:scaleX="0.5"
         android:scaleY="0.5"
-        android:clickable="false"
-        android:progressTint="@color/yellow">
-    </RatingBar>
+        android:stepSize="1.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewUserConduct"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"></RatingBar>
+
+    <ImageButton
+        android:id="@+id/imageButtonTogglePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:layout_marginBottom="21dp"
+        android:background="@null"
+        android:src="@drawable/baseline_visibility_24"
+        app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayoutPassword"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUsername" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

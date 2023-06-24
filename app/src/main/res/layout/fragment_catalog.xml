@@ -8,16 +8,18 @@
     tools:context=".fragments.CatalogFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/catalogBottomNavigation"
+        android:id="@+id/layoutCatalog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/dark_blue"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/CONTENITORE"
+        app:layout_constraintBottom_toTopOf="@id/layoutRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/imageButtonBackToCategories"
+            android:background="@null"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_arrow_back_24"
@@ -25,30 +27,30 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textViewTitleAccountInfo"
+            android:id="@+id/textViewTitleCatalog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/mulishbold"
-            android:text="Account Info"
-            android:textColor="@color/black"
+            android:text="Catalogo"
+            android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageButton"
+            app:layout_constraintStart_toEndOf="@+id/imageButtonBackToCategories"
             app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/CONTENITORE"
+        android:id="@+id/layoutRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/catalogBottomNavigation">
+        app:layout_constraintTop_toBottomOf="@id/layoutCatalog">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/catalogRecyclerView"

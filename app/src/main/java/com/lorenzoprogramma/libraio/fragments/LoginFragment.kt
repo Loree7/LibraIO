@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.lorenzoprogramma.libraio.MainActivity
@@ -16,6 +17,7 @@ import com.lorenzoprogramma.libraio.api.ClientNetwork
 import com.lorenzoprogramma.libraio.data.User
 import com.lorenzoprogramma.libraio.databinding.FragmentLoginBinding
 import com.lorenzoprogramma.libraio.utils.FragmentUtils
+import com.lorenzoprogramma.libraio.utils.UserViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,6 +47,8 @@ class LoginFragment : Fragment() {
                         val homeFragment = HomeFragment()
                         binding.textViewError.visibility = View.GONE
                         obtainUserInfo(username) {user ->
+                            val userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+                            userViewModel.userVM = user
                             val bundle = Bundle()
                             bundle.putParcelable("user", user)
                             homeFragment.arguments = bundle
@@ -69,6 +73,10 @@ class LoginFragment : Fragment() {
         }
 
         binding.textViewGuest.setOnClickListener {
+            val sharedPreferences = requireContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+            val editor = sharedPreferences?.edit()
+            editor?.putBoolean("isLogged", false)
+            editor?.apply()
             FragmentUtils.removeFragment(requireActivity().supportFragmentManager, this)
             FragmentUtils.addFragment(requireActivity().supportFragmentManager, HomeFragment(), R.id.main_frame_layout)
             (activity as? MainActivity)?.toggleBottomNavigationView(true)

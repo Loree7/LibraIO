@@ -2,24 +2,53 @@ package com.lorenzoprogramma.libraio.fragments
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import com.lorenzoprogramma.libraio.MainActivity
 import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.data.User
 import com.lorenzoprogramma.libraio.databinding.FragmentAccountInfoBinding
+import com.lorenzoprogramma.libraio.utils.FragmentUtils
+import com.lorenzoprogramma.libraio.utils.UserViewModel
 
 class AccountInfoFragment : Fragment() {
     private lateinit var binding: FragmentAccountInfoBinding
+    private var isPasswordVisible = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentAccountInfoBinding.inflate(inflater)
         val userInfo = arguments?.getParcelable<User>("user")
         println("info: $userInfo")
-        if (userInfo != null) {
-            setUpUserInfo(userInfo)
+//        if (userInfo != null) {
+//            setUpUserInfo(userInfo)
+//        }
+        val userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        val user = userViewModel.userVM
+        if (user != null) {
+            setUpUserInfo(user)
+        }
+
+
+        binding.imageButtonBack.setOnClickListener {
+            FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, HomeFragment(), R.id.main_frame_layout)
+            (activity as? MainActivity)?.toggleBottomNavigationView(true)
+        }
+
+        binding.imageButtonTogglePassword.setOnClickListener {
+            isPasswordVisible = !isPasswordVisible
+            if (isPasswordVisible) {
+                binding.textInputPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                binding.imageButtonTogglePassword.setImageResource(R.drawable.baseline_visibility_24)
+            } else {
+                binding.textInputPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                binding.imageButtonTogglePassword.setImageResource(R.drawable.baseline_visibility_off_24)
+            }
         }
         return binding.root
     }
@@ -30,10 +59,6 @@ class AccountInfoFragment : Fragment() {
         binding.textInputUsername.text = Editable.Factory.getInstance().newEditable(user.username)
         binding.textInputPassword.text = Editable.Factory.getInstance().newEditable(user.userPassword)
         binding.ratingBar.rating = user.conduct?.toFloat() ?: 0f
-//        binding.textViewName.text = user.name
-//        binding.textViewSurname.text = user.surname
-//        binding.textViewUsername.text = user.username
-//        binding.textViewConduct.text = user.conduct.toString()
     }
 
 }

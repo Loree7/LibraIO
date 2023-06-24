@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lorenzoprogramma.libraio.MainActivity
 import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.adapters.AdapterCategoriesClass
 import com.lorenzoprogramma.libraio.data.Categories
@@ -44,7 +45,6 @@ class BookCategoriesFragment : Fragment() {
 
         adapter.setOnClickListener(object : AdapterCategoriesClass.OnClickListener {
             override fun onClick(position: Int, model: Categories) {
-                //Passare la categoria come string?
                 val catalogFragment = CatalogFragment()
                 val categoryName: String = model.categoriesName
                 val bundle = Bundle()
@@ -54,6 +54,11 @@ class BookCategoriesFragment : Fragment() {
             }
 
         })
+
+        binding.imageButtonBackToHome.setOnClickListener {
+            FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, HomeFragment(), R.id.main_frame_layout)
+            (activity as? MainActivity)?.toggleBottomNavigationView(true)
+        }
 
         return binding.root
     }

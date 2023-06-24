@@ -43,6 +43,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        val sharedPreferences = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLogged", false)
+        editor.apply()
+    }
+
 
     fun toggleBottomNavigationView(toggle: Boolean) {
         if (toggle) {

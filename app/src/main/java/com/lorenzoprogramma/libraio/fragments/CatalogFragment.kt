@@ -11,10 +11,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.adapters.AdapterClass
 import com.lorenzoprogramma.libraio.api.ClientNetwork
 import com.lorenzoprogramma.libraio.data.Book
 import com.lorenzoprogramma.libraio.databinding.FragmentCatalogBinding
+import com.lorenzoprogramma.libraio.utils.FragmentUtils
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,11 +42,6 @@ class CatalogFragment : Fragment() {
         binding.catalogRecyclerView.adapter = adapter
 
 
-//        addBook("9788807924286"){ book ->
-//            println("BOOK: $book")
-//            data.add(book)
-//            adapter.notifyDataSetChanged()
-//        }
         if (categoryRequested != null) {
             showBookOfCategory(categoryRequested) {books ->
                 println("size ${books.size}")
@@ -54,6 +51,10 @@ class CatalogFragment : Fragment() {
                     adapter.notifyDataSetChanged()
                 }
             }
+        }
+
+        binding.imageButtonBackToCategories.setOnClickListener {
+            FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, BookCategoriesFragment(), R.id.main_frame_layout)
         }
 
         println("Data: $data")
