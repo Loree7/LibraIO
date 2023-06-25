@@ -19,7 +19,7 @@
         android:textSize="24sp"
         android:textColorHint="@color/dark_blue"
         android:ems="15"
-        android:hint="Username"
+        android:hint="Nome utente"
         android:inputType="text"
         android:background="@drawable/edittext_design"
         android:minHeight="48dp"

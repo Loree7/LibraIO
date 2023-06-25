@@ -48,6 +48,11 @@ class HomeFragment : Fragment() {
             (activity as? MainActivity)?.toggleBottomNavigationView(false)
         }
 
+        binding.imageViewContacts.setOnClickListener(){
+            FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, ContactsFragment(), R.id.main_frame_layout)
+            (activity as? MainActivity)?.toggleBottomNavigationView(false)
+        }
+
         return binding.root
     }
 
