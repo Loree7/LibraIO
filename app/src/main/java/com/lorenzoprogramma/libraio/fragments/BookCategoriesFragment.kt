@@ -5,13 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lorenzoprogramma.libraio.MainActivity
 import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.adapters.AdapterCategoriesClass
 import com.lorenzoprogramma.libraio.data.Categories
 import com.lorenzoprogramma.libraio.databinding.FragmentBookCategoriesBinding
+import com.lorenzoprogramma.libraio.utils.CategoryViewModel
 import com.lorenzoprogramma.libraio.utils.FragmentUtils
+import com.lorenzoprogramma.libraio.utils.UserViewModel
 
 
 class BookCategoriesFragment : Fragment() {
@@ -46,9 +49,10 @@ class BookCategoriesFragment : Fragment() {
         adapter.setOnClickListener(object : AdapterCategoriesClass.OnClickListener {
             override fun onClick(position: Int, model: Categories) {
                 val catalogFragment = CatalogFragment()
-                val categoryName: String = model.categoriesName
+                val categoryViewModel = ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
+                categoryViewModel.categoryNameVM = model.categoriesName
                 val bundle = Bundle()
-                bundle.putString("category", categoryName)
+                bundle.putString("category", model.categoriesName)
                 catalogFragment.arguments = bundle
                 FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, catalogFragment, R.id.main_frame_layout)
             }

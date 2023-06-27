@@ -23,11 +23,6 @@ class AccountInfoFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentAccountInfoBinding.inflate(inflater)
-        val userInfo = arguments?.getParcelable<User>("user")
-        println("info: $userInfo")
-//        if (userInfo != null) {
-//            setUpUserInfo(userInfo)
-//        }
         val userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         val user = userViewModel.userVM
         if (user != null) {

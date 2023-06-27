@@ -4,16 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.lorenzoprogramma.libraio.data.Book
+import com.lorenzoprogramma.libraio.data.Categories
 import com.lorenzoprogramma.libraio.databinding.CardCellBinding
 
 class AdapterClass(private val dataList: List<Book>) : RecyclerView.Adapter<AdapterClass.ViewHolder>() {
-
+    private var onClickListener: OnClickListener? = null
     class ViewHolder(binding : CardCellBinding): RecyclerView.ViewHolder(binding.root) {
-        val bookImage:ImageView = binding.imageViewCover
-        val bookTitle:TextView = binding.textViewTitle
-//        val bookAuthor:TextView = binding.textViewAuthor
+        val bookImage: ImageView = binding.imageViewCover
+        val bookTitle: TextView = binding.textViewTitle
+        val bookCard: CardView = binding.cardViewCatalog
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,7 +31,17 @@ class AdapterClass(private val dataList: List<Book>) : RecyclerView.Adapter<Adap
         val currentItem = dataList[position]
         holder.bookImage.setImageBitmap(currentItem.cover)
         holder.bookTitle.text = currentItem.title
-//        holder.bookAuthor.text = currentItem.author
+        holder.bookCard.setOnClickListener {
+            onClickListener?.onClick(position, currentItem)
+        }
+    }
+
+    interface OnClickListener {
+        fun onClick(position: Int, model: Book)
+    }
+
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
     }
 
 

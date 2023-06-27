@@ -10,4 +10,7 @@
     <color name="dark_white">#D7D7D8</color>
     <color name="grey">#A4A2B3</color>
     <color name="yellow">#f2e822</color>
+    <color name="purple">#4A22DD</color>
+    <color name="lightBlue">#0E68F9</color>
+    <color name="green">#87EB78</color>
 </resources>

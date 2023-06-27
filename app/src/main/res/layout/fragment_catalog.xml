@@ -5,6 +5,7 @@
     android:id="@+id/catalogF"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightGrey"
     tools:context=".fragments.CatalogFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,6 +38,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.46"
             app:layout_constraintStart_toEndOf="@+id/imageButtonBackToCategories"
             app:layout_constraintTop_toTopOf="parent" />
 

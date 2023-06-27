@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -16,7 +17,9 @@ import com.lorenzoprogramma.libraio.adapters.AdapterClass
 import com.lorenzoprogramma.libraio.api.ClientNetwork
 import com.lorenzoprogramma.libraio.data.Book
 import com.lorenzoprogramma.libraio.databinding.FragmentCatalogBinding
+import com.lorenzoprogramma.libraio.utils.CategoryViewModel
 import com.lorenzoprogramma.libraio.utils.FragmentUtils
+import com.lorenzoprogramma.libraio.utils.UserViewModel
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,8 +35,10 @@ class CatalogFragment : Fragment() {
 
         binding = FragmentCatalogBinding.inflate(inflater)
 
-        val categoryRequested = arguments?.getString("category")
-        println(categoryRequested)
+//        val categoryRequested = arguments?.getString("category")
+        val categoryViewModel = ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
+        val categoryRequested = categoryViewModel.categoryNameVM
+        println("category: $categoryRequested")
 
 
         binding.catalogRecyclerView.layoutManager = GridLayoutManager(context,2)
@@ -57,7 +62,21 @@ class CatalogFragment : Fragment() {
             FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, BookCategoriesFragment(), R.id.main_frame_layout)
         }
 
-        println("Data: $data")
+        adapter.setOnClickListener(object : AdapterClass.OnClickListener {
+            override fun onClick(position: Int, model: Book) {
+                val isbnOfBookRequested = model.isbn
+                if (isbnOfBookRequested != null) {
+                    showBookRequested(isbnOfBookRequested) {book ->
+                        val bookInfoFragment = BookInfoFragment()
+                        val bundle = Bundle()
+                        bundle.putParcelable("book", book)
+                        bookInfoFragment.arguments = bundle
+                        FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, bookInfoFragment, R.id.main_frame_layout)
+                    }
+                }
+            }
+
+        })
 
         return binding.root
 
@@ -82,7 +101,7 @@ class CatalogFragment : Fragment() {
                             val type = result[i].asJsonObject.get("type").asString
 
                             getBookCover(cover) {coverImage ->
-                                val book = Book(isbnR, title, author, coverImage, type)
+                                val book = Book(isbnR, title, author, coverImage, type, null, null, null, null, null)
                                 println("Libro: $book")
                                 arrayOfBooks.add(book)
                                 completeCallbacks++
@@ -120,42 +139,45 @@ class CatalogFragment : Fragment() {
             }
         )
     }
-//    private fun addBook(isbn: String, callback: (Book) -> Unit){
-//
-//        val query = "select isbn, title, author, cover_path from book where isbn = '$isbn';"
-//        ClientNetwork.retrofit.getBook(query).enqueue(
-//            object : retrofit2.Callback<JsonObject> {
-//                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-//                    if (response.isSuccessful) {
-//                        val result = (response.body()?.get("queryset") as JsonArray)
-//                        //callback(result)
-//                        println(result)
-//
-//                        val isbnR = result[0].asJsonObject.get("isbn").asString
-//                        val title = result[0].asJsonObject.get("title").asString
-//                        val author = result[0].asJsonObject.get("author").asString
-//                        val cover = result[0].asJsonObject.get("cover_path").asString
-//
-//                        getBookCover(cover) {coverImage ->
-//                            val book = Book(isbnR, title, author, coverImage)
-//                            println("getBook: $book")
-//                            callback(book)
-//                        }
-////                        val book = Book(isbnR, title, author, null)
-////                        callback(book)
-//
-//                    }else{
-//                        println("PROBLEMI")
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-//                    Log.e("retrofit", "ERRORE: ${t.message}", t)
-//                    println("Problem on Book request")
-//                }
-//            }
-//        )
-//    }
+    private fun showBookRequested(isbn: String, callback: (Book) -> Unit){
+
+        val query = "select isbn, title, author, cover_path, year, editor, type, number_of_copies, description, rating from book where isbn = '$isbn';"
+        ClientNetwork.retrofit.select(query).enqueue(
+            object : retrofit2.Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    if (response.isSuccessful) {
+                        val result = (response.body()?.get("queryset") as JsonArray)
+                        println(result)
+
+                        val isbnR = result[0].asJsonObject.get("isbn").asString
+                        val title = result[0].asJsonObject.get("title").asString
+                        val author = result[0].asJsonObject.get("author").asString
+                        val year = result[0].asJsonObject.get("year").asInt
+                        val editor = result[0].asJsonObject.get("editor").asString
+                        val type = result[0].asJsonObject.get("type").asString
+                        val copies = result[0].asJsonObject.get("number_of_copies").asInt
+                        val description = result[0].asJsonObject.get("description").asString
+                        val rating = result[0].asJsonObject.get("rating").asInt
+                        val cover = result[0].asJsonObject.get("cover_path").asString
+
+                        getBookCover(cover) {coverImage ->
+                            val book = Book(isbnR, title, author, coverImage, type, year, editor, copies, description, rating)
+                            println("getBook: $book")
+                            callback(book)
+                        }
+
+                    }else{
+                        println("PROBLEMI")
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.e("retrofit", "ERRORE: ${t.message}", t)
+                    println("Problem on Book request")
+                }
+            }
+        )
+    }
 
     private fun getBookCover(url: String, callback: (Bitmap?) -> Unit) {
 
