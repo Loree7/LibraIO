@@ -52,7 +52,10 @@ class HomeFragment : Fragment() {
             FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, ContactsFragment(), R.id.main_frame_layout)
             (activity as? MainActivity)?.toggleBottomNavigationView(false)
         }
-
+        binding.imageViewLoans.setOnClickListener(){
+            FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, LoansFragment(), R.id.main_frame_layout)
+            (activity as? MainActivity)?.toggleBottomNavigationView(false)
+        }
         return binding.root
     }
 
