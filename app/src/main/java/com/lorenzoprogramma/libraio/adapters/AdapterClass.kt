@@ -10,7 +10,7 @@ import com.lorenzoprogramma.libraio.data.Book
 import com.lorenzoprogramma.libraio.data.Categories
 import com.lorenzoprogramma.libraio.databinding.CardCellBinding
 
-class AdapterClass(private val dataList: List<Book>) : RecyclerView.Adapter<AdapterClass.ViewHolder>() {
+class AdapterClass(private var dataList: List<Book>) : RecyclerView.Adapter<AdapterClass.ViewHolder>() {
     private var onClickListener: OnClickListener? = null
     class ViewHolder(binding : CardCellBinding): RecyclerView.ViewHolder(binding.root) {
         val bookImage: ImageView = binding.imageViewCover
@@ -42,6 +42,11 @@ class AdapterClass(private val dataList: List<Book>) : RecyclerView.Adapter<Adap
 
     fun setOnClickListener(onClickListener: OnClickListener) {
         this.onClickListener = onClickListener
+    }
+
+    fun setFilteredList(filteredList: ArrayList<Book>) {
+        this.dataList = filteredList
+        notifyDataSetChanged()
     }
 
 

@@ -14,7 +14,7 @@ import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.data.User
 import com.lorenzoprogramma.libraio.databinding.FragmentAccountInfoBinding
 import com.lorenzoprogramma.libraio.utils.FragmentUtils
-import com.lorenzoprogramma.libraio.utils.UserViewModel
+import com.lorenzoprogramma.libraio.viewmodels.UserViewModel
 
 class AccountInfoFragment : Fragment() {
     private lateinit var binding: FragmentAccountInfoBinding

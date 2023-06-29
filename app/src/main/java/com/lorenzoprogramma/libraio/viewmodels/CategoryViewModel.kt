@@ -1,4 +1,4 @@
-package com.lorenzoprogramma.libraio.utils
+package com.lorenzoprogramma.libraio.viewmodels
 
 import android.view.View
 import androidx.lifecycle.ViewModel

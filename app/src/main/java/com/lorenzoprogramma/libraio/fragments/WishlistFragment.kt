@@ -13,12 +13,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.adapters.WishListAdapter
 import com.lorenzoprogramma.libraio.api.ClientNetwork
 import com.lorenzoprogramma.libraio.data.Book
 import com.lorenzoprogramma.libraio.databinding.FragmentWishlistBinding
-import com.lorenzoprogramma.libraio.utils.UserViewModel
+import com.lorenzoprogramma.libraio.viewmodels.UserViewModel
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback

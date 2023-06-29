@@ -9,17 +9,18 @@
     android:id="@+id/homeF">
 
 
-    <ImageView
-        android:id="@+id/imageViewEvents"
+    <ImageButton
+        android:id="@+id/imageButtonEvents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.84"
         app:layout_constraintStart_toEndOf="@+id/textViewTitleAccountInfo"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white"
-        tools:src="@drawable/baseline_event_24" />
+        tools:src="@drawable/baseline_event_50"/>
 
     <TextView
         android:id="@+id/textViewTitleAccountInfo"

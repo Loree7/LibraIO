@@ -12,9 +12,8 @@ import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.adapters.AdapterCategoriesClass
 import com.lorenzoprogramma.libraio.data.Categories
 import com.lorenzoprogramma.libraio.databinding.FragmentBookCategoriesBinding
-import com.lorenzoprogramma.libraio.utils.CategoryViewModel
+import com.lorenzoprogramma.libraio.viewmodels.CategoryViewModel
 import com.lorenzoprogramma.libraio.utils.FragmentUtils
-import com.lorenzoprogramma.libraio.utils.UserViewModel
 
 
 class BookCategoriesFragment : Fragment() {

@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.JsonArray
@@ -17,9 +19,8 @@ import com.lorenzoprogramma.libraio.adapters.AdapterClass
 import com.lorenzoprogramma.libraio.api.ClientNetwork
 import com.lorenzoprogramma.libraio.data.Book
 import com.lorenzoprogramma.libraio.databinding.FragmentCatalogBinding
-import com.lorenzoprogramma.libraio.utils.CategoryViewModel
+import com.lorenzoprogramma.libraio.viewmodels.CategoryViewModel
 import com.lorenzoprogramma.libraio.utils.FragmentUtils
-import com.lorenzoprogramma.libraio.utils.UserViewModel
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,12 +36,13 @@ class CatalogFragment : Fragment() {
 
         binding = FragmentCatalogBinding.inflate(inflater)
 
-//        val categoryRequested = arguments?.getString("category")
+//        val categoryRequested = argumentsxx?.getString("category")
         val categoryViewModel = ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
         val categoryRequested = categoryViewModel.categoryNameVM
         println("category: $categoryRequested")
 
 
+        binding.searchBar.clearFocus()
         binding.catalogRecyclerView.layoutManager = GridLayoutManager(context,2)
         val data = mutableListOf<Book>()
         val adapter = AdapterClass(data)
@@ -57,6 +59,31 @@ class CatalogFragment : Fragment() {
                 }
             }
         }
+
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filteredList = arrayListOf<Book>()
+                for (book in data) {
+                    if (newText != null) {
+                        if (book.isbn!!.toLowerCase().contains(newText.toLowerCase()) || book.title!!.toLowerCase().contains(newText.toLowerCase()) || book.author!!.toLowerCase().contains(newText.toLowerCase())) {
+                            filteredList.add(book)
+                        }
+                    }
+                }
+
+                if (filteredList.isEmpty()) {
+                    Toast.makeText(context, "Nessun libro trovato", Toast.LENGTH_SHORT).show()
+                } else {
+                    adapter.setFilteredList(filteredList)
+                }
+                return true
+            }
+
+        })
 
         binding.imageButtonBackToCategories.setOnClickListener {
             FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, BookCategoriesFragment(), R.id.main_frame_layout)

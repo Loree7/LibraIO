@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -17,7 +16,7 @@ import com.lorenzoprogramma.libraio.api.ClientNetwork
 import com.lorenzoprogramma.libraio.data.User
 import com.lorenzoprogramma.libraio.databinding.FragmentLoginBinding
 import com.lorenzoprogramma.libraio.utils.FragmentUtils
-import com.lorenzoprogramma.libraio.utils.UserViewModel
+import com.lorenzoprogramma.libraio.viewmodels.UserViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
