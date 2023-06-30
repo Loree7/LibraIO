@@ -104,10 +104,9 @@ class CatalogFragment : Fragment() {
             }
 
         })
-
         return binding.root
-
     }
+
     private fun showBookOfCategory(category: String, callback: (ArrayList<Book>) -> Unit) {
         val query = "select isbn, title, author, cover_path, type from book where type = '$category';"
         ClientNetwork.retrofit.select(query).enqueue(

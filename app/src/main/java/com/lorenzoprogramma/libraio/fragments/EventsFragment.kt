@@ -1,22 +1,102 @@
 package com.lorenzoprogramma.libraio.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.lorenzoprogramma.libraio.R
+import com.lorenzoprogramma.libraio.adapters.AdapterClass
+import com.lorenzoprogramma.libraio.adapters.EventsAdapter
+import com.lorenzoprogramma.libraio.api.ClientNetwork
+import com.lorenzoprogramma.libraio.data.Book
+import com.lorenzoprogramma.libraio.data.Categories
+import com.lorenzoprogramma.libraio.data.Events
 import com.lorenzoprogramma.libraio.databinding.FragmentEventsBinding
+import com.lorenzoprogramma.libraio.utils.FragmentUtils
+import retrofit2.Call
+import retrofit2.Response
 
 class EventsFragment : Fragment() {
     private lateinit var binding: FragmentEventsBinding
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         binding = FragmentEventsBinding.inflate(inflater)
+        binding.eventsRecyclerView.layoutManager = LinearLayoutManager(context)
+
+
+        val data = ArrayList<Events>()
+        val adapter = EventsAdapter(data)
+        binding.eventsRecyclerView.adapter = adapter
+        EventsAdapter(data)
+
+
+        for(i in 1 until data.size)
+            addEvents(i) { events ->
+                println("size ${events.size}")
+                for (event in events) {
+                    println("Events: $event")
+                    data.add(event)
+                    adapter.notifyDataSetChanged()
+                }
+            }
+
+
+        binding.eventsRecyclerView.setHasFixedSize(true)
+
+
+        binding.imageButtonBackToHome.setOnClickListener {
+            FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, HomeFragment(), R.id.main_frame_layout)
+        }
+
         return binding.root
+        }
+
+    private fun addEvents(id: Int, callback: (ArrayList<Events>) -> Unit) {
+        val query = "select author, title, start_date, categorie from events where id = '$id';"
+        ClientNetwork.retrofit.select(query).enqueue(
+            object : retrofit2.Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    if (response.isSuccessful) {
+                        val result = (response.body()?.get("queryset") as JsonArray)
+                        //callback(result)
+                        println(result)
+                        val arrayOfEvents = ArrayList<Events>()
+                        var completeCallbacks = 0
+                        for (i in 0 until result.size()) {
+                            val title = result[i].asJsonObject.get("title").asString
+                            val author = result[i].asJsonObject.get("author").asString
+                            //val cover = result[i].asJsonObject.get("cover_path").asString
+                            val date = result[i].asJsonObject.get("cover_path").asString
+                            //val type = result[i].asJsonObject.get("type").asString
+                            val categorie = result[i].asJsonObject.get("type").asString
+//-----------------------------------------------------
+                                val event = Events(title, author, date, categorie)
+                                println("Evento: $event")
+                                arrayOfEvents.add(event)
+                                completeCallbacks++
+
+                                if (completeCallbacks == result.size()) {
+                                    callback(arrayOfEvents)
+                                }
+                            }
+                        } else{
+                        println("PROBLEMI")
+                        }
+                }
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    Log.e("retrofit", "ERRORE: ${t.message}", t)
+                    println("Problem on Book request")
+                }
+            }
+        )
     }
 }

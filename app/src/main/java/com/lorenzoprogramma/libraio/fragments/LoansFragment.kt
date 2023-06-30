@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
-import com.lorenzoprogramma.libraio.MainActivity
 import com.lorenzoprogramma.libraio.R
 import com.lorenzoprogramma.libraio.adapters.AdapterClass
 import com.lorenzoprogramma.libraio.adapters.AdapterTabPage
@@ -39,7 +38,7 @@ class LoansFragment : Fragment() {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab : TabLayout.Tab?){
                 if (tab != null){
-                    viewPager2.currentItem = tab.position
+                viewPager2.currentItem = tab.position
                 }
             }
 
@@ -62,12 +61,9 @@ class LoansFragment : Fragment() {
             }
 
         })
-
         binding.imageButtonBackToHome.setOnClickListener {
             FragmentUtils.replaceFragment(requireActivity().supportFragmentManager, HomeFragment(), R.id.main_frame_layout)
-            (activity as? MainActivity)?.toggleBottomNavigationView(true)
         }
-
 
         return binding.root
     }
