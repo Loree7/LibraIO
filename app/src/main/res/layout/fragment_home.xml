@@ -16,10 +16,11 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.84"
+        android:background="@null"
         app:layout_constraintStart_toEndOf="@+id/textViewTitleAccountInfo"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/dark_blue"
-        tools:src="@drawable/baseline_event_50"/>
+        app:tint="@color/white"
+        android:src="@drawable/baseline_event_50"/>
 
     <TextView
         android:id="@+id/textViewTitleAccountInfo"
