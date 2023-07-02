@@ -29,6 +29,12 @@ class ContactsFragment : Fragment() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         }
+
+        binding.buttonOpenMap.setOnClickListener {
+            val url = "https://goo.gl/maps/UBrYFhZpoiYMWPZR6"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
         return binding.root
     }
 
