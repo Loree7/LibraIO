@@ -27,10 +27,10 @@ class EventsAdapter(private val eventsList : ArrayList<Events> ) : RecyclerView.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val event = eventsList[position]
-        holder.editTextAuthor.setText(event.authorEditText)
-        holder.editTextTitle.setText(event.titleEditText)
-        holder.editTextDate.setText(event.dateEditText)
-        holder.editTextCategories.setText(event.categoriesEditText)
+        holder.editTextAuthor.text = event.authorEditText
+        holder.editTextTitle.text = event.titleEditText
+        holder.editTextDate.text = event.dateEditText
+        holder.editTextCategories.text = event.categoriesEditText
 
     }
 }

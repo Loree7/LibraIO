@@ -18,6 +18,12 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentHomeBinding.inflate(inflater)
 
+        val isExpired = arguments?.getBoolean("exipired")
+        println("isExpired: $isExpired")
+        if (isExpired != null && isExpired) {
+            Toast.makeText(context, "Il prestito di alcuni libri e' scaduto, la prossima volta ricorda di restituirli in anticipo", Toast.LENGTH_LONG).show()
+        }
+
         binding.imageViewAccountInfo.setOnClickListener {
             val sharedPreferences = requireContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
             val isLogged = sharedPreferences.getBoolean("isLogged", false)

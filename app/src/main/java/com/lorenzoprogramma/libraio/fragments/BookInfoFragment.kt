@@ -135,7 +135,7 @@ class BookInfoFragment : Fragment() {
     private fun createLoan(isbn: String, username: String, callback: (Boolean) -> Unit) {
         val startDate = LocalDateTime.now()
         val endDate = startDate.plusWeeks(1)
-        val query = "insert into loans (username_user, isbn_book, start_date, end_date) values ('$username', '$isbn', '$startDate', '$endDate');"
+        val query = "insert into loans (username_user, isbn_book, start_date, end_date, status) values ('$username', '$isbn', '$startDate', '$endDate', 1);"
 
         ClientNetwork.retrofit.insert(query).enqueue(
             object : retrofit2.Callback<JsonObject> {
@@ -196,7 +196,7 @@ class BookInfoFragment : Fragment() {
     }
 
     private fun checkIfLoanAlreadyExist(isbn: String, username: String, callback: (Boolean) -> Unit) {
-        val query = "select id from loans where username_user = '$username' and isbn_book = '$isbn';"
+        val query = "select id from loans where username_user = '$username' and isbn_book = '$isbn' and status = 1;"
         ClientNetwork.retrofit.select(query).enqueue(
             object : retrofit2.Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {

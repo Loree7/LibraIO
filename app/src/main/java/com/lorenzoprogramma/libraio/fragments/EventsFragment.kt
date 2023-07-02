@@ -36,14 +36,13 @@ class EventsFragment : Fragment() {
         val data = ArrayList<Events>()
         val adapter = EventsAdapter(data)
         binding.eventsRecyclerView.adapter = adapter
-        EventsAdapter(data)
 
 
         getTitles { arrayOfTitles ->
-            if(arrayOfTitles.isEmpty()){
-                println("Vuoto")
+            if (arrayOfTitles.isEmpty()){
+                showNoElementsDesign()
             }else{
-                for(title in arrayOfTitles){
+                for (title in arrayOfTitles) {
                     getEvents(title) {event ->
                         data.add(event)
                         adapter.notifyDataSetChanged()
@@ -63,19 +62,26 @@ class EventsFragment : Fragment() {
 
         return binding.root
         }
+
+    private fun showNoElementsDesign() {
+        binding.eventsRecyclerView.visibility = View.GONE
+        binding.imageViewNoElements.visibility = View.VISIBLE
+        binding.textViewNoElements.visibility = View.VISIBLE
+        binding.textViewNoElementsTip.visibility = View.VISIBLE
+    }
     private fun getEvents(title : String, callback: (Events) -> Unit) {
-        val query = "select author, title, start_date, categorie from events where title = '$title';"
+        val query = "select author, title, start_date, category from events where title = '$title';"
         ClientNetwork.retrofit.select(query).enqueue(
             object : retrofit2.Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     if (response.isSuccessful) {
                         val result = (response.body()?.get("queryset") as JsonArray)
                         println(result)
-                        val title = result[0].asJsonObject.get("title").asString
+                        val titleR = result[0].asJsonObject.get("title").asString
                         val author = result[0].asJsonObject.get("author").asString
                         val date = result[0].asJsonObject.get("start_date").asString
-                        val categorie = result[0].asJsonObject.get("categorie").asString
-                        val event = Events(title, author, date, categorie)
+                        val category = result[0].asJsonObject.get("category").asString
+                        val event = Events(author, titleR, date, category)
                         callback(event)
                     } else{
                         println("PROBLEMI")
@@ -106,7 +112,7 @@ class EventsFragment : Fragment() {
                             //val type = result[i].asJsonObject.get("type").asString
                             //val categorie = result[i].asJsonObject.get("type").asString
 //-----------------------------------------------------
-                                arrayOfTitle.add(title)
+                            arrayOfTitle.add(title)
                                 completeCallbacks++
 
                                 if (completeCallbacks == result.size()) {
